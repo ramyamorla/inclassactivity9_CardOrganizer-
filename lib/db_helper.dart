@@ -36,7 +36,7 @@ class DBHelper {
         await db.insert('Folders', {'name': 'Spades'});
         await db.insert('Folders', {'name': 'Diamonds'});
         await db.insert('Folders', {'name': 'Clubs'});
-        // Prepopulate one sample card (extend as needed)
+        // Prepopulate one sample card
         await db.insert('Cards', {
           'name': 'Ace',
           'suit': 'Hearts',
@@ -47,7 +47,13 @@ class DBHelper {
     );
   }
 
+  // Retrieve all folders
   static Future<List<Map<String, dynamic>>> getFolders() async {
     return await _db!.query('Folders');
+  }
+
+  // Retrieve cards for a given folder by folderId
+  static Future<List<Map<String, dynamic>>> getCardsByFolder(int folderId) async {
+    return await _db!.query('Cards', where: 'folderId = ?', whereArgs: [folderId]);
   }
 }
